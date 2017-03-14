@@ -28,4 +28,5 @@
 ##   ==============================================
 
 # Add Mac-specific property - should be ignored elsewhere (Bug 47064)
+export JVM_ARGS="-Duser.language=en -Duser.region=EN"
 java $JVM_ARGS -Dapple.laf.useScreenMenuBar=true -jar `dirname $0`/ApacheJMeter.jar "$@"
