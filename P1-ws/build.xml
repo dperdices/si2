@@ -56,6 +56,10 @@ ant limpiar-todo
         <antcall target="cliente" />
     </target>    
 
+    <target name="replegar">
+        <antcall target="replegar-servicio" />
+        <antcall target="replegar-cliente" />
+    </target>    
     <target name="cliente">
         <antcall target="generar-stubs" />
         <antcall target="compilar-cliente" />
