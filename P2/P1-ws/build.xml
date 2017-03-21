@@ -32,6 +32,7 @@ ant empaquetar-cliente
 Despliegue:
 ant desplegar-servicio
 ant desplegar-cliente
+ant replegar
 ant replegar-servicio
 ant replegar-cliente
 ant redesplegar
@@ -60,6 +61,7 @@ ant limpiar-todo
         <antcall target="replegar-servicio" />
         <antcall target="replegar-cliente" />
     </target>    
+
     <target name="cliente">
         <antcall target="generar-stubs" />
         <antcall target="compilar-cliente" />
