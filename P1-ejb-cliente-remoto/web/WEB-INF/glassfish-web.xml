@@ -5,6 +5,6 @@ GlassFish Application Server 3.1 Servlet 3.0//EN"
 <glassfish-web-app>
 <ejb-ref>
 <ejb-ref-name>VisaDAOBean</ejb-ref-name>
-<jndi-name>corbaname:iiop:10.1.6.2:3700#java:global/P1-ejb/P1-ejb/VisaDAOBean!ssii2.visa.VisaDAORemote</jndi-name>
+<jndi-name>corbaname:iiop:10.1.6.1:3700#java:global/P1-ejb/P1-ejb/VisaDAOBean!ssii2.visa.VisaDAORemote</jndi-name>
 </ejb-ref>
 </glassfish-web-app>
