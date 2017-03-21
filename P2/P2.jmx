@@ -71,7 +71,7 @@
           <stringProp name="CounterConfig.start">1</stringProp>
           <stringProp name="CounterConfig.end"></stringProp>
           <stringProp name="CounterConfig.incr">5</stringProp>
-          <stringProp name="CounterConfig.name"></stringProp>
+          <stringProp name="CounterConfig.name">idTransaccion</stringProp>
           <stringProp name="CounterConfig.format"></stringProp>
           <boolProp name="CounterConfig.per_user">false</boolProp>
         </CounterConfig>
@@ -208,7 +208,7 @@
           <stringProp name="CounterConfig.start">2</stringProp>
           <stringProp name="CounterConfig.end"></stringProp>
           <stringProp name="CounterConfig.incr">5</stringProp>
-          <stringProp name="CounterConfig.name"></stringProp>
+          <stringProp name="CounterConfig.name">idTransaccion</stringProp>
           <stringProp name="CounterConfig.format"></stringProp>
           <boolProp name="CounterConfig.per_user">false</boolProp>
         </CounterConfig>
@@ -345,7 +345,7 @@
           <stringProp name="CounterConfig.start">3</stringProp>
           <stringProp name="CounterConfig.end"></stringProp>
           <stringProp name="CounterConfig.incr">5</stringProp>
-          <stringProp name="CounterConfig.name"></stringProp>
+          <stringProp name="CounterConfig.name">idTransaccion</stringProp>
           <stringProp name="CounterConfig.format"></stringProp>
           <boolProp name="CounterConfig.per_user">false</boolProp>
         </CounterConfig>
@@ -486,7 +486,7 @@
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
