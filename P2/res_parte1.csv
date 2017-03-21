@@ -1,0 +1,5 @@
+sampler_label,aggregate_report_count,average,aggregate_report_median,aggregate_report_90%_line,aggregate_report_min,aggregate_report_max,aggregate_report_error%,aggregate_report_rate,aggregate_report_bandwidth
+P1-base,1000,10,10,12,7,45,0.0,92.3446301597562,118.47247913588512
+P1-ws,1000,57,55,69,38,358,0.0,17.462368595676317,22.608139810271364
+P1-ejb,1000,24,24,32,15,66,0.0,39.99520057593089,52.406094081210256
+TOTAL,3000,30,24,59,7,358,0.0,31.91081989533251,41.355633123962896
