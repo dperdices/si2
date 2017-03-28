@@ -1,0 +1,2 @@
+TOT.MUESTRAS        MEDIA:
+          40            0        0.025            0

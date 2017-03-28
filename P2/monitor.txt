@@ -1,0 +1,2 @@
+TOT.MUESTRAS        MEDIA:
+          72     0.722222     0.777778            0
