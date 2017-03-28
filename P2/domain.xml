@@ -2,13 +2,13 @@
   <security-configurations>
     <authentication-service default="true" name="adminAuth" use-password-credential="true">
       <security-provider provider-name="adminSpc" name="spcrealm" type="LoginModule">
-        <login-module-config control-flag="sufficient" module-class="com.sun.enterprise.admin.util.AdminLoginModule" name="adminSpecialLM">
+        <login-module-config module-class="com.sun.enterprise.admin.util.AdminLoginModule" control-flag="sufficient" name="adminSpecialLM">
           <property name="config" value="server-config"></property>
           <property name="auth-realm" value="admin-realm"></property>
         </login-module-config>
       </security-provider>
       <security-provider provider-name="adminFile" name="filerealm" type="LoginModule">
-        <login-module-config control-flag="sufficient" module-class="com.sun.enterprise.security.auth.login.FileLoginModule" name="adminFileLM">
+        <login-module-config module-class="com.sun.enterprise.security.auth.login.FileLoginModule" control-flag="sufficient" name="adminFileLM">
           <property name="config" value="server-config"></property>
           <property name="auth-realm" value="admin-realm"></property>
         </login-module-config>
@@ -22,7 +22,7 @@
   </security-configurations>
   <managed-job-config></managed-job-config>
   <system-applications>
-    <application context-root="" object-type="system-admin" name="__admingui" directory-deployed="true" location="${com.sun.aas.installRootURI}/lib/install/applications/__admingui">
+    <application context-root="" object-type="system-admin" directory-deployed="true" name="__admingui" location="${com.sun.aas.installRootURI}/lib/install/applications/__admingui">
       <module name="__admingui">
         <engine sniffer="web"></engine>
         <engine sniffer="security"></engine>
@@ -44,27 +44,16 @@
       <property name="DatabaseName" value="sun-appserv-samples"></property>
       <property name="connectionAttributes" value=";create=true"></property>
     </jdbc-connection-pool>
-    <connector-connection-pool max-pool-size="250" resource-adapter-name="jmsra" steady-pool-size="1" name="jms/__defaultConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
+    <connector-connection-pool resource-adapter-name="jmsra" max-pool-size="250" steady-pool-size="1" name="jms/__defaultConnectionFactory-Connection-Pool" connection-definition-name="javax.jms.ConnectionFactory"></connector-connection-pool>
     <connector-resource pool-name="jms/__defaultConnectionFactory-Connection-Pool" object-type="system-all-req" jndi-name="jms/__defaultConnectionFactory"></connector-resource>
     <managed-scheduled-executor-service object-type="system-all" jndi-name="concurrent/__defaultManagedScheduledExecutorService"></managed-scheduled-executor-service>
     <managed-executor-service object-type="system-all" jndi-name="concurrent/__defaultManagedExecutorService"></managed-executor-service>
     <context-service object-type="system-all" jndi-name="concurrent/__defaultContextService"></context-service>
     <managed-thread-factory object-type="system-all" jndi-name="concurrent/__defaultManagedThreadFactory"></managed-thread-factory>
-    <jdbc-connection-pool datasource-classname="org.postgresql.ds.PGConnectionPoolDataSource" name="VisaPool" res-type="javax.sql.ConnectionPoolDataSource">
-      <property name="Password" value="****"></property>
-      <property name="portNumber" value="5432"></property>
-      <property name="databaseName" value="visa"></property>
-      <property name="User" value="alumnodb"></property>
-      <property name="serverName" value="10.1.6.1"></property>
-    </jdbc-connection-pool>
-    <jdbc-resource pool-name="VisaPool" jndi-name="jdbc/VisaDB"></jdbc-resource>
   </resources>
   <servers>
     <server config-ref="server-config" name="server">
       <application-ref ref="__admingui" virtual-servers="__asadmin"></application-ref>
-      <application-ref ref="P1-base" virtual-servers="server"></application-ref>
-      <application-ref ref="P1-ejb-cliente-remoto" virtual-servers="server"></application-ref>
-      <application-ref ref="P1-ws" virtual-servers="server"></application-ref>
       <resource-ref ref="jdbc/__TimerPool"></resource-ref>
       <resource-ref ref="jdbc/__default"></resource-ref>
       <resource-ref ref="jms/__defaultConnectionFactory"></resource-ref>
@@ -72,7 +61,6 @@
       <resource-ref ref="concurrent/__defaultManagedExecutorService"></resource-ref>
       <resource-ref ref="concurrent/__defaultContextService"></resource-ref>
       <resource-ref ref="concurrent/__defaultManagedThreadFactory"></resource-ref>
-      <resource-ref ref="jdbc/VisaDB"></resource-ref>
     </server>
   </servers>
   <nodes>
@@ -107,7 +95,7 @@
       <transaction-service tx-log-dir="${com.sun.aas.instanceRoot}/logs"></transaction-service>
       <batch-runtime-configuration></batch-runtime-configuration>
       <jms-service default-jms-host="default_JMS_host" type="EMBEDDED">
-        <jms-host port="${JMS_PROVIDER_PORT}" host="localhost" name="default_JMS_host"></jms-host>
+        <jms-host port="${JMS_PROVIDER_PORT}" name="default_JMS_host" host="localhost"></jms-host>
       </jms-service>
       <web-container>
         <session-config>
@@ -186,34 +174,35 @@
         <property name="default-digest-algorithm" value="SHA-256"></property>
       </security-service>
       <java-config classpath-suffix="" debug-options="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=9009" system-classpath="">
-        <jvm-options>-XX:MaxPermSize=192m</jvm-options>
-        <jvm-options>-client</jvm-options>
-        <jvm-options>-Djava.awt.headless=true</jvm-options>
-        <jvm-options>-Djavax.management.builder.initial=com.sun.enterprise.v3.admin.AppServerMBeanServerBuilder</jvm-options>
-        <jvm-options>-XX:+UnlockDiagnosticVMOptions</jvm-options>
-        <jvm-options>-Djava.endorsed.dirs=${com.sun.aas.installRoot}/modules/endorsed${path.separator}${com.sun.aas.installRoot}/lib/endorsed</jvm-options>
-        <jvm-options>-Djava.security.policy=${com.sun.aas.instanceRoot}/config/server.policy</jvm-options>
-        <jvm-options>-Djava.security.auth.login.config=${com.sun.aas.instanceRoot}/config/login.conf</jvm-options>
-        <jvm-options>-Dcom.sun.enterprise.security.httpsOutboundKeyAlias=s1as</jvm-options>
-        <jvm-options>-Xmx512m</jvm-options>
-        <jvm-options>-Djavax.net.ssl.keyStore=${com.sun.aas.instanceRoot}/config/keystore.jks</jvm-options>
-        <jvm-options>-Djavax.net.ssl.trustStore=${com.sun.aas.instanceRoot}/config/cacerts.jks</jvm-options>
-        <jvm-options>-Djava.ext.dirs=${com.sun.aas.javaRoot}/lib/ext${path.separator}${com.sun.aas.javaRoot}/jre/lib/ext${path.separator}${com.sun.aas.instanceRoot}/lib/ext</jvm-options>
-        <jvm-options>-Djdbc.drivers=org.apache.derby.jdbc.ClientDriver</jvm-options>
-        <jvm-options>-DANTLR_USE_DIRECT_CLASS_LOADING=true</jvm-options>
-        <jvm-options>-Dcom.sun.enterprise.config.config_environment_factory_class=com.sun.enterprise.config.serverbeans.AppserverConfigEnvironmentFactory</jvm-options>
         <jvm-options>-Dorg.glassfish.additionalOSGiBundlesToStart=org.apache.felix.shell,org.apache.felix.gogo.runtime,org.apache.felix.gogo.shell,org.apache.felix.gogo.command,org.apache.felix.shell.remote,org.apache.felix.fileinstall</jvm-options>
+        <jvm-options>-Djavax.management.builder.initial=com.sun.enterprise.v3.admin.AppServerMBeanServerBuilder</jvm-options>
+        <jvm-options>-Djavax.net.ssl.keyStore=${com.sun.aas.instanceRoot}/config/keystore.jks</jvm-options>
+        <jvm-options>-server</jvm-options>
+        <jvm-options>-DANTLR_USE_DIRECT_CLASS_LOADING=true</jvm-options>
+        <jvm-options>-Dfelix.fileinstall.bundles.startTransient=true</jvm-options>
+        <jvm-options>-Djavax.net.ssl.trustStore=${com.sun.aas.instanceRoot}/config/cacerts.jks</jvm-options>
+        <jvm-options>-Dosgi.shell.telnet.ip=127.0.0.1</jvm-options>
+        <jvm-options>-Dfelix.fileinstall.log.level=2</jvm-options>
+        <jvm-options>-XX:+UnlockDiagnosticVMOptions</jvm-options>
+        <jvm-options>-Djava.security.auth.login.config=${com.sun.aas.instanceRoot}/config/login.conf</jvm-options>
+        <jvm-options>-Dfelix.fileinstall.disableConfigSave=false</jvm-options>
+        <jvm-options>-Djava.awt.headless=true</jvm-options>
+        <jvm-options>-Xmx512m</jvm-options>
+        <jvm-options>-Djdbc.drivers=org.apache.derby.jdbc.ClientDriver</jvm-options>
         <jvm-options>-Dosgi.shell.telnet.port=6666</jvm-options>
         <jvm-options>-Dosgi.shell.telnet.maxconn=1</jvm-options>
-        <jvm-options>-Dosgi.shell.telnet.ip=127.0.0.1</jvm-options>
+        <jvm-options>-Djava.ext.dirs=${com.sun.aas.javaRoot}/lib/ext${path.separator}${com.sun.aas.javaRoot}/jre/lib/ext${path.separator}${com.sun.aas.instanceRoot}/lib/ext</jvm-options>
+        <jvm-options>-Djava.security.policy=${com.sun.aas.instanceRoot}/config/server.policy</jvm-options>
         <jvm-options>-Dgosh.args=--nointeractive</jvm-options>
-        <jvm-options>-Dfelix.fileinstall.dir=${com.sun.aas.installRoot}/modules/autostart/</jvm-options>
+        <jvm-options>-Xms512m</jvm-options>
+        <jvm-options>-Dcom.sun.enterprise.config.config_environment_factory_class=com.sun.enterprise.config.serverbeans.AppserverConfigEnvironmentFactory</jvm-options>
+        <jvm-options>-XX:MaxPermSize=192m</jvm-options>
+        <jvm-options>-Djava.endorsed.dirs=${com.sun.aas.installRoot}/modules/endorsed${path.separator}${com.sun.aas.installRoot}/lib/endorsed</jvm-options>
+        <jvm-options>-Dcom.sun.enterprise.security.httpsOutboundKeyAlias=s1as</jvm-options>
         <jvm-options>-Dfelix.fileinstall.poll=5000</jvm-options>
-        <jvm-options>-Dfelix.fileinstall.log.level=2</jvm-options>
         <jvm-options>-Dfelix.fileinstall.bundles.new.start=true</jvm-options>
-        <jvm-options>-Dfelix.fileinstall.bundles.startTransient=true</jvm-options>
-        <jvm-options>-Dfelix.fileinstall.disableConfigSave=false</jvm-options>
         <jvm-options>-XX:NewRatio=2</jvm-options>
+        <jvm-options>-Dfelix.fileinstall.dir=${com.sun.aas.installRoot}/modules/autostart/</jvm-options>
       </java-config>
       <network-config>
         <protocols>
@@ -259,7 +248,7 @@
         </transports>
       </network-config>
       <thread-pools>
-        <thread-pool name="admin-thread-pool" max-thread-pool-size="50" max-queue-size="256"></thread-pool>
+        <thread-pool name="admin-thread-pool" max-queue-size="256" max-thread-pool-size="50"></thread-pool>
         <thread-pool name="http-thread-pool"></thread-pool>
         <thread-pool name="thread-pool-1" max-thread-pool-size="200"></thread-pool>
       </thread-pools>
@@ -308,7 +297,7 @@
       </ejb-container>
       <mdb-container></mdb-container>
       <jms-service addresslist-behavior="priority" default-jms-host="default_JMS_host" type="EMBEDDED">
-        <jms-host port="${JMS_PROVIDER_PORT}" host="localhost" name="default_JMS_host"></jms-host>
+        <jms-host port="${JMS_PROVIDER_PORT}" name="default_JMS_host" host="localhost"></jms-host>
       </jms-service>
       <log-service file="${com.sun.aas.instanceRoot}/logs/server.log" log-rotation-limit-in-bytes="2000000">
         <module-log-levels></module-log-levels>
@@ -447,7 +436,7 @@
       <thread-pools>
         <thread-pool name="http-thread-pool"></thread-pool>
         <thread-pool name="thread-pool-1" max-thread-pool-size="200"></thread-pool>
-        <thread-pool name="admin-thread-pool" max-thread-pool-size="50" max-queue-size="256"></thread-pool>
+        <thread-pool name="admin-thread-pool" max-queue-size="256" max-thread-pool-size="50"></thread-pool>
       </thread-pools>
       <group-management-service>
         <failure-detection></failure-detection>
@@ -473,34 +462,5 @@
     <secure-admin-principal dn="CN=localhost-instance,OU=GlassFish,O=Oracle Corporation,L=Santa Clara,ST=California,C=US"></secure-admin-principal>
   </secure-admin>
   <clusters></clusters>
-  <applications>
-    <application context-root="/P1-base" object-type="user" name="P1-base" location="${com.sun.aas.instanceRootURI}/applications/P1-base/">
-      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/P1-base/P1-base.war"></property>
-      <property name="archiveType" value="war"></property>
-      <property name="defaultAppName" value="P1-base"></property>
-      <module name="P1-base">
-        <engine sniffer="security"></engine>
-        <engine sniffer="web"></engine>
-      </module>
-    </application>
-    <application context-root="/P1-ejb-cliente-remoto" object-type="user" name="P1-ejb-cliente-remoto" location="${com.sun.aas.instanceRootURI}/applications/P1-ejb-cliente-remoto/">
-      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/P1-ejb-cliente-remoto/P1-ejb-cliente-remoto.war"></property>
-      <property name="archiveType" value="war"></property>
-      <property name="defaultAppName" value="P1-ejb-cliente-remoto"></property>
-      <module name="P1-ejb-cliente-remoto">
-        <engine sniffer="security"></engine>
-        <engine sniffer="web"></engine>
-      </module>
-    </application>
-    <application context-root="/P1-ws-cliente" object-type="user" name="P1-ws" location="${com.sun.aas.instanceRootURI}/applications/P1-ws/">
-      <property name="appLocation" value="${com.sun.aas.instanceRootURI}/applications/__internal/P1-ws/P1-ws-cliente.war"></property>
-      <property name="archiveType" value="war"></property>
-      <property name="defaultAppName" value="P1-ws-cliente"></property>
-      <module name="P1-ws">
-        <engine sniffer="webservices"></engine>
-        <engine sniffer="security"></engine>
-        <engine sniffer="web"></engine>
-      </module>
-    </application>
-  </applications>
+  <applications></applications>
 </domain>
