@@ -28,6 +28,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ssii2.visa.PagoBean;
+import java.net.UnknownHostException;
 
 /**
  *
@@ -159,6 +160,12 @@ public class ComienzaPago extends ServletRaiz {
         }
         pago.setImporte(impd);
         pago.setRutaRetorno(request.getParameter(PARAM_RUTA_RETORNO));  
+        pago.setInstancia(System.getProperty("com.sun.aas.instanceName"));
+        try {
+            pago.setIp(java.net.InetAddress.getLocalHost().getHostAddress());
+        } catch (UnknownHostException e) {
+            pago.setIp("UnknownHostException");
+        }
         return pago;
     }
     

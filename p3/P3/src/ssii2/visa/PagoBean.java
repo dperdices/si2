@@ -13,16 +13,19 @@ package ssii2.visa;
  */
 public class PagoBean {
     
-	private String idTransaccion; 
-	private String idComercio;  
-	private double importe;
-        private String ruta_retorno;
-        
-        private TarjetaBean tarjeta;
-        
-        /* Calculados por el gestor de medios de pago */
-        private String codRespuesta;    
-        private String idAutorizacion;  
+    private String idTransaccion; 
+    private String idComercio;  
+    private double importe;
+    private String ruta_retorno;
+
+    private TarjetaBean tarjeta;
+
+    private String instancia;
+    private String ip;
+
+    /* Calculados por el gestor de medios de pago */
+    private String codRespuesta;    
+    private String idAutorizacion;  
 
     /**
      * @return el ID de transacci&oacute;n
@@ -134,5 +137,33 @@ public class PagoBean {
      */
     public void setTarjeta(TarjetaBean tarjeta) {
         this.tarjeta = tarjeta;
+    }
+
+    /**
+     * @return la instancia
+     */
+    public String getInstancia() {
+        return instancia;
+    }
+
+    /**
+     * @param instancia la instancia
+     */
+    public void setInstancia(String instancia) {
+        this.instancia = instancia;
+    }
+
+    /**
+     * @return la ip
+     */
+    public String getIp() {
+        return ip;
+    }
+
+    /**
+     * @param ip la ip
+     */
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }
